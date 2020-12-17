@@ -24,8 +24,8 @@ int main()
     player.addAction(stanceToFlighty);
     player.addDefaultAction(skip);
 
-    std::cout << "         Welcome to the battle zone!              " << std::endl;
-    std::cout << "                GET PSYCHED!!                     " << std::endl << std::endl;
+    std::cout << "                                        Welcome to the battle zone!                                          " << std::endl;
+    std::cout << "                                              GET PSYCHED!!                                                  " << std::endl << std::endl;
 
     std::cout << "You are approached by " << enemy.name << ": " << enemy.description << std::endl << std::endl;
 

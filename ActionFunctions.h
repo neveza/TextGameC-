@@ -101,8 +101,6 @@ void doNothing(Actor& target, Actor& self) { return; };
 
 //global declaration of ActionTypes - would rather in class, but not sure how yet
 
-//make up postures?
-
 ActionType punch = ActionType("Punch", "A right hook to the face", " hurls back and hits hard into the face", attack);
 ActionType block = ActionType("Block", "A firm stance to resist damage", " raises arms up and prepares to take a strike\n", defend);
 ActionType skip = ActionType("skip", "invalid action or skipped turn", " does nothing wasting their valuable time\n", doNothing);
