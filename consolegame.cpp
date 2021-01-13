@@ -5,12 +5,13 @@
 #include "Actor.h"
 #include "ActionType.h"
 #include "ActionFunctions.h"
+#include "CompPlayer.h"
 #include <limits>
 
 int main()
 {
-    Actor enemy = Actor("Kung-Fu Tommy", "He stands with his black belt fastened tight.", 50, 10, 50, 5);
-    Actor player = Actor("Player", "you", 100, 10, 25, 10);
+    Actor enemy = Actor("Kung-Fu Tommy", "He stands with his black belt fastened tight.", 50, 10, 35, 60);
+    Actor player = Actor("Player", "you", 100, 60, 25, 30);
 
     enemy.addAction(punch);
     enemy.addDefaultAction(weep);
@@ -30,11 +31,21 @@ int main()
     std::cout << "You are approached by " << enemy.name << ": " << enemy.description << std::endl << std::endl;
 
     int  enemyActCount = 0;
-    while (player.health > 0 && enemy.health > 0)
+    while (player.currHealth > 0 && enemy.currHealth > 0)
     {
         //runs debuff sequence at start of round
         player.runDebuffQueue(enemy);
         enemy.runDebuffQueue(player);
+
+        CompPlayer enemyComp = CompPlayer(enemy.actions, PriorityEnums::aggressive);
+        enemyComp.generateTruthTable(enemy, player);
+
+        enemy.printStats();
+
+        std::cout << "Truth Table: PunchID = " << enemyComp.willAttack() << std::endl;
+        std::cout << "Truth Table: BlockID = " << enemyComp.willDefend() << std::endl;
+        std::cout << "Truth Table: YellID = "  << enemyComp.willBuff()    << std::endl;
+        std::cout << "Trust Table Health:" << enemyComp.truthTable[statTestKey::GREAT_HEALTH] << enemyComp.truthTable[statTestKey::GOOD_HEALTH] << enemyComp.truthTable[statTestKey::BAD_HEALTH] << std::endl;
 
         int numberOfAction = player.calcNumOfActions(enemy.quick);
 
@@ -42,6 +53,7 @@ int main()
 
         char choices[10] = { ' ', ' ', ' ', ' ', ' ', 
                             ' ', ' ', ' ', ' ', ' ' };
+
 
         for (int n = 0; n < numberOfAction; n++)
         {
@@ -71,25 +83,12 @@ int main()
         numberOfAction = enemy.calcNumOfActions(player.quick);
 
         std::cout << "Enemy's actions: " << numberOfAction << std::endl << std::endl;
+        //enemyComp.decision(numberOfAction);
 
-        for (int n = 0; n < numberOfAction; n++)
+        for (auto action : enemyComp.decision(numberOfAction))
         {
-            int enemyChoice = enemyActCount % 6;
-            char enemyAct;
-
-            if (enemyChoice == 1 || enemyActCount == 0 || enemyChoice == 4)
-            {
-                enemyAct = 'a';
-            }
-            else if (enemyChoice == 2 || enemyChoice == 3)
-            {
-                enemyAct = 'b';
-            }
-            else
-                enemyAct = '0';
-
-            enemy.addActQueue(enemyAct);
-            enemyActCount++;
+            std::cout << "Decision actions: " << action << std::endl;
+            enemy.addActQueue(action);
         }
 
         //runs act queue after all inputs

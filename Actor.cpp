@@ -2,10 +2,16 @@
 #include <iomanip>
 #include "Actor.h"
 
+
+//It'll drop decimal, but not important.
+int Actor::getHealthPercent(){return ((currHealth * 100)/maxHealth);}
+
 int Actor::calcNumOfActions(int oppossingQuick)
 {
-    int num = ((2*quick - oppossingQuick) / 10);  // faster change
+    //int num = ((2*quick - oppossingQuick) / 10);  // faster change
     //int num = (quick - opposingQuick)/10; // slower change
+
+    int num = quick / 10; //temp resolve to make the game playable and not overly difficult
 
     if (num <= 0)
     {
@@ -33,7 +39,6 @@ void Actor::runDebuffQueue(Actor& target)
     }
 }
 
-
 void Actor::addAction(ActionType& act)
 {
     actions.emplace(ALPHA_MIN + numActOptions++, act);
@@ -41,7 +46,6 @@ void Actor::addAction(ActionType& act)
 
 void Actor::addAction(char key, ActionType& act)
 {
-    //actions[key] = act;
     actions.emplace(key, act);
 }
 
@@ -92,7 +96,7 @@ void Actor::printStats()
     }
     std::cout << "Current Stance: " << stanceText << std::endl << std::endl;
 
-    std::cout << "Health: " << health << std::endl;
+    std::cout << "Health: " << currHealth << std::endl;
     std::cout << "Physique: " << physique << std::endl;
     std::cout << "Power: " << power << std::endl;
     std::cout << "Quick: " << quick << std::endl;
@@ -124,7 +128,8 @@ void Actor::printActions()
 Actor::Actor(std::string name, std::string description, int health, int physique, int power, int quick)
 {
     this->name = name;
-    this->health = health;
+    this->maxHealth = health;
+    this->currHealth = this->maxHealth;
     this->physique = physique;
     this->power = power;
     this->quick = quick;

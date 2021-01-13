@@ -24,6 +24,9 @@
     <ClCompile Include="Actor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CompPlayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActionFunctions.h">
@@ -33,6 +36,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ActionType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CompPlayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionConstants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

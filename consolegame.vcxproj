@@ -141,12 +141,15 @@
   <ItemGroup>
     <ClCompile Include="ActionType.cpp" />
     <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="CompPlayer.cpp" />
     <ClCompile Include="consolegame.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ActionConstants.h" />
     <ClInclude Include="ActionFunctions.h" />
     <ClInclude Include="ActionType.h" />
     <ClInclude Include="Actor.h" />
+    <ClInclude Include="CompPlayer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

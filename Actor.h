@@ -14,7 +14,9 @@ class Actor
 public:
     std::string name = "NoName";
     std::string description = "You forgot to add text, dumbshit";
-    int health = 0;
+    int maxHealth = 0;
+    int currHealth = 0;
+    int getHealthPercent();
     int defense = 0;//base defense
     int attack = 0; //base attck
 

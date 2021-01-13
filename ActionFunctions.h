@@ -1,9 +1,9 @@
 #pragma once
-
 #include <iostream>
+#include "ActionConstants.h"
 //#include "Actor.h"
 
-class Actor;
+//class Actor;
 void attack(Actor& target, Actor& self)
 {
     int attackMod = (self.power + self.attack)/10 * -1;
@@ -12,8 +12,12 @@ void attack(Actor& target, Actor& self)
     {
         healthMod = 0;
     }
+    else if (healthMod == 0)
+    {
+        healthMod = -1;
+    }
     std::cout << " inflicts " << healthMod * -1 << " damage to " << target.name << std::endl;
-    target.health += healthMod;
+    target.currHealth += healthMod;
     //std::cout << target.name << " now has " << target.health << std::endl << std::endl;
     return;
 }
@@ -100,13 +104,14 @@ void doNothing(Actor& target, Actor& self) { return; };
 
 
 //global declaration of ActionTypes - would rather in class, but not sure how yet
-
-ActionType punch = ActionType("Punch", "A right hook to the face", " hurls back and hits hard into the face", attack);
-ActionType block = ActionType("Block", "A firm stance to resist damage", " raises arms up and prepares to take a strike\n", defend);
-ActionType skip = ActionType("skip", "invalid action or skipped turn", " does nothing wasting their valuable time\n", doNothing);
-ActionType weep = ActionType("Weep", "Weeping", " weeps uncontrollably\n", doNothing);
-ActionType yell = ActionType("Yell", "Yell to strengthen", " screeches to the sky to gain strength.", powerUp);
-ActionType stanceToOffense = ActionType("Offensive Stance", "Shift to offensive stance", "You shift your weight to your lead foot.", changeOffensiveStance);
-ActionType stanceToBalanced = ActionType("Balanced Stance", "Shift to Balanced stance", "You shift your weight equally between your feet.", changeBalancedStance);
-ActionType stanceToDefense = ActionType("Defensive Stance", "Shift to Defensive stance", "You shift your weight to your rear foot.", changeDefensiveStance);
-ActionType stanceToFlighty = ActionType("Flighty Stance", "Shift to Flight stance", "You bounce on your feet", changeFlightyStance);
+//another possiblity is to create a tool that will seralize ActionType and just make a lookup table.
+//Possibly a look-up table that returns a created object than having objects in global space?
+ActionType punch = ActionType(ActionIds::PUNCH_ID, "A right hook to the face", " hurls back and hits hard into the face", attack);
+ActionType block = ActionType(ActionIds::BLOCK_ID, "A firm stance to resist damage", " raises arms up and prepares to take a strike\n", defend);
+ActionType skip = ActionType(ActionIds::SKIP_ID, "invalid action or skipped turn", " does nothing wasting their valuable time\n", doNothing);
+ActionType weep = ActionType(ActionIds::WEEP_ID, "Weeping", " weeps uncontrollably\n", doNothing);
+ActionType yell = ActionType(ActionIds::YELL_ID, "Yell to strengthen", " screeches to the sky to gain strength.", powerUp);
+ActionType stanceToOffense = ActionType(ActionIds::OFFENSIVE_STANCE_ID, "Shift to offensive stance", "You shift your weight to your lead foot.", changeOffensiveStance);
+ActionType stanceToBalanced = ActionType(ActionIds::BALANCED_STANCE_ID, "Shift to Balanced stance", "You shift your weight equally between your feet.", changeBalancedStance);
+ActionType stanceToDefense = ActionType(ActionIds::DEFENSIVE_STANCE_ID, "Shift to Defensive stance", "You shift your weight to your rear foot.", changeDefensiveStance);
+ActionType stanceToFlighty = ActionType(ActionIds::FLIGHTY_STANCE_ID, "Shift to Flight stance", "You bounce on your feet", changeFlightyStance);
